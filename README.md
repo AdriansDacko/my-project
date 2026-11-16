@@ -81,3 +81,37 @@ journalctl -u flask-tunnel-9001 -f
 
 ``` flask --app app.py run ```
 
+## Kā pielikt datu vizualizācijas rīku - grafana
+
+Rediģēt esošo docker-compose.yml failu, lai tas izskatītos aptuveni šādi:
+```
+services:
+  grafana:
+    image: grafana/grafana:13.1-slim
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+  datubaze2:
+    image: mysql:8.0
+    restart: unless-stopped
+    container_name: datubazes_serveris2
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    volumes:
+      - mysql_dati2:/var/lib/mysql
+
+volumes:
+  mysql_dati2:
+  grafana-storage:
+```
+Doties uz tīmekļa pārlūku un atvērt:
+```<VM_servera_IP_adrese>:3000```
+
