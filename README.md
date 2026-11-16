@@ -9,10 +9,14 @@
 ```sudo apt install sshpass openssh-client -y```
 
 
+Izveidot failu atbilstoši sava datora numuram:
+1. dators - 9001
+2. dators - 9002
+3. utt.
+piemēram 1. datoram
+```sudo nano /etc/systemd/system/flask-tunnel-9001.service```
 
-```sudo nano /etc/systemd/system/flask-tunnel-9000.service```
-
-ievietot failā šo:
+ievietot failā šo (pievērst uzmanību porta numuriem - 9*** jāsakrīt ar datora numuru):
 
 
 ``` 
@@ -26,7 +30,7 @@ Type=simple
 User=ubuntuuser
 
 ExecStart=/usr/bin/sshpass -p 'rpipassword' /usr/bin/ssh -N \
-    -R 127.0.0.1:9000:127.0.0.1:5000 \
+    -R 127.0.0.1:9001:127.0.0.1:5000 \
     -o StrictHostKeyChecking=accept-new \
     -o ServerAliveInterval=30 \
     -o ServerAliveCountMax=3 \
@@ -41,17 +45,17 @@ WantedBy=multi-user.target
 
 
 ```
-nomainīt paroles, piekļuves datus un palaist:
+nomainīt paroles, piekļuves datus, IP un palaist:
 ```
 sudo systemctl daemon-reload
-sudo systemctl enable flask-tunnel-9000
-sudo systemctl start flask-tunnel-9000
+sudo systemctl enable flask-tunnel-9001
+sudo systemctl start flask-tunnel-9001
 
 # pārbaudīt vai status ir aktīvs
-sudo systemctl status flask-tunnel-9000
+sudo systemctl status flask-tunnel-9001
 
 # apskatīt žurnālfailus
-journalctl -u flask-tunnel-9000 -f
+journalctl -u flask-tunnel-9001 -f
 ```
 
 
