@@ -9,6 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  GITHUB_TOKEN: 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
 
 jobs:
   build-and-push:
